@@ -1,0 +1,63 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid-container">
+    @*Top menu here if you need it*@
+</div>
+<div class="grid-container" style="padding-left:0">
+    <div class="grid-x">
+        <div class="small-2" style="padding-right: 5px">
+            <div class="admin-tree-menu">
+                <ul id="AdminTree" class="vertical menu accordion-menu" data-accordion-menu>
+                    @*@await Component.InvokeAsync("Menu", new { testId = 1 })*@
+                    @foreach (var menu in Model)
+                    {
+                        if (menu.Children.Any())
+                        {
+                            <li>
+                                <a href="#" class="tree-menu-header">
+                                    <i class="@menu.IconClass"></i><span>@menu.Content</span>
+                                </a>
+                                <ul class="menu vertical nested is-active">
+                                    <partial name="Components/Menu/_MenuPartial" model="menu.Children" />
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="@menu.SelectedClass">
+                                @{
+                                    if (string.IsNullOrEmpty(menu.Url))   //Add either onclick event or href.
+                                    {
+                                        <a onclick="@menu.OnClick">
+                                            <i class="@menu.IconClass"></i><span style="@menu.SelectedStyle">@menu.Content</span>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@menu.Url">
+                                            <i class="@menu.IconClass"></i><span style="@menu.SelectedStyle;">@menu.Content</span>
+                                        </a>
+                                    }
+                                }
+                            </li>
+                        }
+                    }
+                    1212
+                    1212
+                </ul>
+            </div>
+        </div>
+        <div class="small-10">
+            @RenderBody()
+        </div>
+    </div>
+</div>
+
+@RenderSection("Scripts", required: false)
+
+@*Include your scripts to be called from the menu here: *@
+<script type="text/javascript" asp-append-version="true" src="~/js/menuhelper.js"></script>
+
+
