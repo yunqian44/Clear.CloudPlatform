@@ -20,9 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="MenuLists\Commands\" />
-      <Folder Include="MenuLists\Queries\" />
-      <Folder Include="SubMenus\Queries\" />
+      <Folder Include="MenuLists\Commands\UpdateMenuItem\" />
+      <Folder Include="MenuLists\Commands\DeleteMenuItem\" />
       <Folder Include="SubMenus\Commands\" />
     </ItemGroup>
 
