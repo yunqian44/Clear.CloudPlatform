@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Clear.CloudPlatform.Application.Common.Interfaces;
 using Clear.CloudPlatform.Application.SubMenus.Queries;
+using Clear.CloudPlatform.Data.Infrastructure;
 using Clear.CloudPlatform.Domain.Entities.MenuEntities;
 using MediatR;
 
