@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Query;
 
-namespace Clear.CloudPlatform.Application.Common.Interfaces;
+namespace Clear.CloudPlatform.Data.Infrastructure;
 
 public interface ISpecification<T>
 {

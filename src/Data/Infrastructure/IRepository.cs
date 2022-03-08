@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Clear.CloudPlatform.Application.Common.Interfaces;
+namespace Clear.CloudPlatform.Data.Infrastructure;
 
 public interface IRepository<T> //where T : class
 {
