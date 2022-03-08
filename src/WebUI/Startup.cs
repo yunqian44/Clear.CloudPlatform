@@ -1,9 +1,11 @@
 using Clear.CloudPlatform.Application;
 using Clear.CloudPlatform.Application.Common.Interfaces;
+using Clear.CloudPlatform.Data.Infrastructure;
 using Clear.CloudPlatform.Infrastructure;
 using Clear.CloudPlatform.Infrastructure.Persistence;
 using Clear.CloudPlatform.WebUI.Filters;
 using Clear.CloudPlatform.WebUI.Services;
+using Data.Infrastructure;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using NSwag;
@@ -27,6 +29,9 @@ public class Startup
         services.AddInfrastructure(Configuration);
 
         services.AddDatabaseDeveloperPageExceptionFilter();
+
+
+        services.AddScoped(typeof(IRepository<>), typeof(DbContextRepository<>));
 
         services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
