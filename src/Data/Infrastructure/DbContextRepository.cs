@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Infrastructure
+namespace Clear.CloudPlatform.Data.Infrastructure
 {
     public abstract class DbContextRepository<T> : IRepository<T> where T : class
     {
