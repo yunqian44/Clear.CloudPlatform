@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Clear.CloudPlatform.Data.Entities;
 
 namespace Clear.CloudPlatform.Domain.Entities.MenuEntities;
 
@@ -41,6 +42,32 @@ public class MenuItem : AuditableEntity
     /// <summary>
     /// SubMenus
     /// </summary>
-    public IList<SubMenuItem>? SubMenus { get; private set; } = new List<SubMenuItem>();
+    public List<SubMenuItem>? SubMenus { get; set; } = new List<SubMenuItem>();
+
+
+    public MenuItem()
+    {
+        SubMenus = new();
+        Icon = "icon-file-text2";
+    }
+
+    public MenuItem(MenuEntity entity)
+    {
+        if (entity is null) return;
+
+        Id = entity.Id;
+        Title = entity.Title.Trim();
+        DisplayOrder = entity.DisplayOrder;
+        Icon = entity.Icon?.Trim();
+        Url = entity.Url?.Trim();
+        IsOpenInNewTab = entity.IsOpenInNewTab;
+        SubMenus = entity.SubMenus.Select(sm => new SubMenuItem
+        {
+            Id = sm.Id,
+            Title = sm.Title,
+            Url = sm.Url,
+            IsOpenInNewTab = sm.IsOpenInNewTab
+        }).ToList();
+    }
 
 }
