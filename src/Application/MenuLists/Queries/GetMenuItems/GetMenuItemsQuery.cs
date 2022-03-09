@@ -1,35 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using Clear.CloudPlatform.Application.Common.Interfaces;
-using Clear.CloudPlatform.Application.SubMenus.Queries;
+﻿using AutoMapper;
+using Clear.CloudPlatform.Data.Entities;
 using Clear.CloudPlatform.Data.Infrastructure;
 using Clear.CloudPlatform.Domain.Entities.MenuEntities;
 using MediatR;
 
 namespace Clear.CloudPlatform.Application.MenuLists.Queries.GetMenuItems;
 
-public record GetMenuItemsQuery : IRequest<IReadOnlyList<MenuItemViewModel>>;
+public record GetMenuItemsQuery : IRequest<IReadOnlyList<MenuItem>>;
 
 
-public class GetMenuItemsQueryHandler : IRequestHandler<GetMenuItemsQuery, IReadOnlyList<MenuItemViewModel>>
+public class GetMenuItemsQueryHandler : IRequestHandler<GetMenuItemsQuery, IReadOnlyList<MenuItem>>
 {
     //private readonly IApplicationDbContext _context;
-    private readonly IRepository<MenuItemViewModel> _menuRepo;
+    private readonly IRepository<MenuEntity> _menuRepo;
     private readonly IMapper _mapper;
 
-    public GetMenuItemsQueryHandler(IRepository<MenuItemViewModel> menuRepo, IMapper mapper)
+    public GetMenuItemsQueryHandler(IRepository<MenuEntity> menuRepo)
     {
         _menuRepo = menuRepo;
-        _mapper = mapper;
     }
 
-    public async Task<IReadOnlyList<MenuItemViewModel>> Handle(GetMenuItemsQuery request, CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<MenuItem>> Handle(GetMenuItemsQuery request, CancellationToken cancellationToken)
     {
-        var list = await _menuRepo.SelectAsync(p => new MenuItemViewModel
+        var list = await _menuRepo.SelectAsync(p => new MenuItem
         {
             Id = p.Id,
             DisplayOrder = p.DisplayOrder,
@@ -37,7 +30,7 @@ public class GetMenuItemsQueryHandler : IRequestHandler<GetMenuItemsQuery, IRead
             Title = p.Title,
             Url = p.Url,
             IsOpenInNewTab = p.IsOpenInNewTab,
-            SubMenus = p.SubMenus.Select(sm => new SubMenuViewModel
+            SubMenus = p.SubMenus.Select(sm => new SubMenuItem
             {
                 Id = sm.Id,
                 Title = sm.Title,
