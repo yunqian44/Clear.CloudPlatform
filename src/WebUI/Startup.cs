@@ -1,37 +1,49 @@
 using Clear.CloudPlatform.Application;
 using Clear.CloudPlatform.Application.Common.Interfaces;
+using Clear.CloudPlatform.Data;
 using Clear.CloudPlatform.Data.Infrastructure;
+using Clear.CloudPlatform.Data.SqlServer;
+using Clear.CloudPlatform.Data.SqlServer.Infrastructure;
 using Clear.CloudPlatform.Infrastructure;
+using Clear.CloudPlatform.Infrastructure.Common;
 using Clear.CloudPlatform.Infrastructure.Persistence;
 using Clear.CloudPlatform.WebUI.Filters;
 using Clear.CloudPlatform.WebUI.Services;
-using Data.Infrastructure;
 using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using NSwag;
-using NSwag.Generation.Processors.Security;
-
+using Microsoft.EntityFrameworkCore;
 namespace Clear.CloudPlatform.WebUI;
 
 public class Startup
 {
-    public Startup(IConfiguration configuration)
+    public Startup(IConfiguration configuration, IWebHostEnvironment env)
     {
         Configuration = configuration;
+        Env = env;
     }
 
     public IConfiguration Configuration { get; }
+    public IWebHostEnvironment Env { get; }
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+
+        services.AddSingleton(new Appsettings(Env.ContentRootPath));
         services.AddApplication();
         services.AddInfrastructure(Configuration);
 
         services.AddDatabaseDeveloperPageExceptionFilter();
 
+        AppDomain.CurrentDomain.Load("Clear.CloudPlatform.Application");
 
-        services.AddScoped(typeof(IRepository<>), typeof(DbContextRepository<>));
+        services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+
+
+        
+        services.AddSqlServerStorage(Appsettings.app("ConnectionStrings", "ToolBlockDatabase"));
+        
 
         services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
@@ -54,19 +66,7 @@ public class Startup
         services.AddSpaStaticFiles(configuration => 
             configuration.RootPath = "ClientApp/dist");
 
-        services.AddOpenApiDocument(configure =>
-        {
-            configure.Title = "Clear.CloudPlatform API";
-            configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
-            {
-                Type = OpenApiSecuritySchemeType.ApiKey,
-                Name = "Authorization",
-                In = OpenApiSecurityApiKeyLocation.Header,
-                Description = "Type into the textbox: Bearer {your JWT token}."
-            });
-
-            configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
-        });
+        
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -92,11 +92,7 @@ public class Startup
             app.UseSpaStaticFiles();
         }
 
-        app.UseSwaggerUi3(settings =>
-        {
-            settings.Path = "/api";
-            settings.DocumentPath = "/api/specification.json";
-        });
+       
 
         app.UseRouting();
 
