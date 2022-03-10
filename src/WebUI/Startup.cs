@@ -1,5 +1,6 @@
 using Clear.CloudPlatform.Application;
 using Clear.CloudPlatform.Application.Common.Interfaces;
+using Clear.CloudPlatform.Auth;
 using Clear.CloudPlatform.Data;
 using Clear.CloudPlatform.Data.Infrastructure;
 using Clear.CloudPlatform.Data.SqlServer;
@@ -36,12 +37,13 @@ public class Startup
 
         services.AddDatabaseDeveloperPageExceptionFilter();
 
-        AppDomain.CurrentDomain.Load("Clear.CloudPlatform.Application");
+        //AppDomain.CurrentDomain.Load("Clear.CloudPlatform.Application");
 
-        services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+        //services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+
+        services.AddToolsAuthenticaton(Configuration);
 
 
-        
         services.AddSqlServerStorage(Appsettings.app("ConnectionStrings", "ToolBlockDatabase"));
         
 

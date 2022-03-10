@@ -25,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUI", "src\WebUI\WebUI.cs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "src\Data\Data.csproj", "{4DA778F8-E6FF-41AA-BF58-16C048B6C2B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.SqlServer", "src\Data.SqlServer\Data.SqlServer.csproj", "{D814DF49-7CB9-4514-A099-C7289EF3D194}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.SqlServer", "src\Data.SqlServer\Data.SqlServer.csproj", "{D814DF49-7CB9-4514-A099-C7289EF3D194}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth", "src\Auth\Auth.csproj", "{145E04A7-7384-4D51-8D59-926D4A3B7136}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +75,10 @@ Global
 		{D814DF49-7CB9-4514-A099-C7289EF3D194}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D814DF49-7CB9-4514-A099-C7289EF3D194}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D814DF49-7CB9-4514-A099-C7289EF3D194}.Release|Any CPU.Build.0 = Release|Any CPU
+		{145E04A7-7384-4D51-8D59-926D4A3B7136}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{145E04A7-7384-4D51-8D59-926D4A3B7136}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{145E04A7-7384-4D51-8D59-926D4A3B7136}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{145E04A7-7384-4D51-8D59-926D4A3B7136}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,6 +93,7 @@ Global
 		{22454EE9-16B3-4B7A-8352-37E59B858155} = {6ED356A7-8B47-4613-AD01-C85CF28491BD}
 		{4DA778F8-E6FF-41AA-BF58-16C048B6C2B7} = {6ED356A7-8B47-4613-AD01-C85CF28491BD}
 		{D814DF49-7CB9-4514-A099-C7289EF3D194} = {6ED356A7-8B47-4613-AD01-C85CF28491BD}
+		{145E04A7-7384-4D51-8D59-926D4A3B7136} = {6ED356A7-8B47-4613-AD01-C85CF28491BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3CB609D9-5D54-4C11-A371-DAAC8B74E430}
