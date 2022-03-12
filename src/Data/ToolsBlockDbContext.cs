@@ -24,11 +24,11 @@ public class ToolsBlockDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.ApplyConfiguration(new MenuConfiguration());
         // base.OnModelCreating(modelBuilder);
         //modelBuilder.ApplyConfiguration(new CategoryConfiguration());
         //modelBuilder.ApplyConfiguration(new TagConfiguration());
         //modelBuilder.ApplyConfiguration(new FriendLinkConfiguration());
-        //modelBuilder.ApplyConfiguration(new MenuConfiguration());
         //modelBuilder.ApplyConfiguration(new SubMenuConfiguration());
         //modelBuilder.ApplyConfiguration(new BlogConfigurationConfiguration());
 

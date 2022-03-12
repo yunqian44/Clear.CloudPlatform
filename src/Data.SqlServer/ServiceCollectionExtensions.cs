@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Clear.CloudPlatform.Data.Infrastructure;
 using Clear.CloudPlatform.Data.SqlServer.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Clear.CloudPlatform.Data.SqlServer;
@@ -17,6 +18,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddSqlServerStorage(this IServiceCollection services, string connectionString)
     {
         services.AddScoped(typeof(IRepository<>), typeof(SqlServerDbContextRepository<>));
+
 
         services.AddDbContext<SqlServerDbContext>(options =>
             options.UseLazyLoadingProxies()
