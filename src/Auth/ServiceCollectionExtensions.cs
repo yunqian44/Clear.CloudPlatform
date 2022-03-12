@@ -28,7 +28,7 @@ public static class ServiceCollectionExtensions
         {
             options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-        }).AddApiKeySupport(_ => { }).AddMicrosoftIdentityWebApp(configuration.GetSection("Authentication:AzureAd"));
+        }).AddMicrosoftIdentityWebApp(configuration.GetSection("Authentication:AzureAd"));
 
         return services;
     }

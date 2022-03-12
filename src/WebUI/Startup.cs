@@ -61,8 +61,8 @@ public class Startup
         services.AddRazorPages();
 
         // Customise default API behaviour
-        services.Configure<ApiBehaviorOptions>(options => 
-            options.SuppressModelStateInvalidFilter = true);
+        //services.Configure<ApiBehaviorOptions>(options => 
+            //options.SuppressModelStateInvalidFilter = true);
 
         // In production, the Angular files will be served from this directory
         services.AddSpaStaticFiles(configuration => 
@@ -99,7 +99,7 @@ public class Startup
         app.UseRouting();
 
         app.UseAuthentication();
-        app.UseIdentityServer();
+        //app.UseIdentityServer();
         app.UseAuthorization();
         app.UseEndpoints(endpoints =>
         {
