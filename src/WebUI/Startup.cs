@@ -1,3 +1,4 @@
+using System.Data;
 using Clear.CloudPlatform.Application;
 using Clear.CloudPlatform.Application.Common.Interfaces;
 using Clear.CloudPlatform.Auth;
@@ -30,24 +31,21 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-
         services.AddSingleton(new Appsettings(Env.ContentRootPath));
-        services.AddApplication();
-        services.AddInfrastructure(Configuration);
+        //services.AddApplication();
+        //services.AddInfrastructure(Configuration);
 
-        services.AddDatabaseDeveloperPageExceptionFilter();
+        //services.AddDatabaseDeveloperPageExceptionFilter();
 
         //AppDomain.CurrentDomain.Load("Clear.CloudPlatform.Application");
 
-        //services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+        services.AddMediatR(typeof(Startup));
 
         services.AddToolsAuthenticaton(Configuration);
 
-
         services.AddSqlServerStorage(Appsettings.app("ConnectionStrings", "ToolBlockDatabase"));
-        
 
-        services.AddSingleton<ICurrentUserService, CurrentUserService>();
+        //services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
         services.AddHttpContextAccessor();
 
@@ -61,12 +59,12 @@ public class Startup
         services.AddRazorPages();
 
         // Customise default API behaviour
-        services.Configure<ApiBehaviorOptions>(options => 
-            options.SuppressModelStateInvalidFilter = true);
+        //services.Configure<ApiBehaviorOptions>(options => 
+            //options.SuppressModelStateInvalidFilter = true);
 
         // In production, the Angular files will be served from this directory
-        services.AddSpaStaticFiles(configuration => 
-            configuration.RootPath = "ClientApp/dist");
+        //services.AddSpaStaticFiles(configuration => 
+           // configuration.RootPath = "ClientApp/dist");
 
         
     }
@@ -99,15 +97,38 @@ public class Startup
         app.UseRouting();
 
         app.UseAuthentication();
-        app.UseIdentityServer();
+        //app.UseIdentityServer();
         app.UseAuthorization();
-        app.UseEndpoints(endpoints =>
+        switch (Program.InitResult)
         {
-            endpoints.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=home}/{action=Index}/{id?}");
-            endpoints.MapRazorPages();
-        });
+            case StartupInitResult.DatabaseConnectionFail:
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapGet("/", () => 
+                        "Database connection test failed, please check your connection string and firewall settings"
+                    );
+                    endpoints.MapRazorPages();
+                });
+                return;
+            case StartupInitResult.DatabaseSetupFail:
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapGet("/", () =>"Database setup failed, please check error log"
+                    );
+                    endpoints.MapRazorPages();
+                });
+                return;
+            default:
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller=home}/{action=Index}/{id?}");
+                    endpoints.MapRazorPages();
+                });
+                return;
+        }
+        
 
         //app.UseSpa(spa =>
         //{
