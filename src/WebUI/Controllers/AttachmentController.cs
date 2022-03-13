@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Clear.CloudPlatform.Domain.Entities.ToolsBlockEntities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Clear.CloudPlatform.WebUI.Controllers;
 
@@ -14,13 +15,9 @@ public class AttachmentController : ControllerBase
     }
 
     [HttpGet("ToolsBlocks")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status302Found)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(IEnumerable<ToolsBlockItem>),StatusCodes.Status200OK)]
     public async Task<IActionResult> ToolsBlocks()
     {
-
         return Ok();
     }
 }
