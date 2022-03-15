@@ -32,7 +32,7 @@ public class Testing
 
         _configuration = builder.Build();
 
-        var startup = new Startup(_configuration);
+        var startup = new Startup(_configuration,null);
 
         var services = new ServiceCollection();
 
