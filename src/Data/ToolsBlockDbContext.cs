@@ -19,12 +19,14 @@ public class ToolsBlockDbContext : DbContext
     {
     }
 
+    public virtual DbSet<ToolsBlockEntity> ToolsBlock { get; set; }
     public virtual DbSet<MenuEntity> Menu { get; set; }
     public virtual DbSet<SubMenuEntity> SubMenu { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new MenuConfiguration());
+        modelBuilder.ApplyConfiguration(new SubMenuConfiguration());
         // base.OnModelCreating(modelBuilder);
         //modelBuilder.ApplyConfiguration(new CategoryConfiguration());
         //modelBuilder.ApplyConfiguration(new TagConfiguration());
