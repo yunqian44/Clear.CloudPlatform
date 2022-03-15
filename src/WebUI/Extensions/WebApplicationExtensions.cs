@@ -1,5 +1,7 @@
-﻿using Clear.CloudPlatform.Data.SqlServer;
+﻿using Clear.CloudPlatform.Data;
+using Clear.CloudPlatform.Data.SqlServer;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Clear.CloudPlatform.WebUI;
 
@@ -14,12 +16,32 @@ public static class WebApplicationExtensions
             var env = services.GetRequiredService<IWebHostEnvironment>();
 
             var context = services.GetRequiredService<SqlServerDbContext>();
-            //var context = new SqlServerDbContext();
+            var logger = services.GetRequiredService<ILogger>();
 
             bool canConnect = await context.Database.CanConnectAsync();
             if (!canConnect) return StartupInitResult.DatabaseConnectionFail;
 
             await context.Database.EnsureCreatedAsync();
+
+            bool isNewEnv= !await context.Menu.AnyAsync();
+            if (isNewEnv)
+            {
+                try
+                {
+                    logger.LogInformation("Seeding database...");
+
+                    await context.ClearAllData();
+                    await Seed.SeedAsync(context, logger);
+
+                    logger.LogInformation("Database seeding successfully.");
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+
 
             return StartupInitResult.None;
 

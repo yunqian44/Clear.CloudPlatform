@@ -47,3 +47,15 @@ public class ToolsBlockDbContext : DbContext
         //            .HasForeignKey(pt => pt.PostId));
     }
 }
+
+
+public static class BlogDbContextExtension
+{
+    public static async Task ClearAllData(this ToolsBlockDbContext context)
+    {
+
+        context.Menu.RemoveRange();
+
+        await context.SaveChangesAsync();
+    }
+}
