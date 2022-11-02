@@ -16,8 +16,13 @@ public static class WebApplicationExtensions
             var env = services.GetRequiredService<IWebHostEnvironment>();
 
             var context = services.GetRequiredService<SqlServerDbContext>();
-            var logger = services.GetRequiredService<ILogger>();
+            
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddConsole();
+            });
 
+            var logger = loggerFactory.CreateLogger<Program>();
             bool canConnect = await context.Database.CanConnectAsync();
             if (!canConnect) return StartupInitResult.DatabaseConnectionFail;
 
@@ -28,6 +33,7 @@ public static class WebApplicationExtensions
             {
                 try
                 {
+
                     logger.LogInformation("Seeding database...");
 
                     await context.ClearAllData();
